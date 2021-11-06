@@ -5,3 +5,14 @@
     - Hotel: [hotel IDs...]
     - Destination: destinationID
 - Each hotel should be returned once (uniquely merge data)
+
+# To start API
+```bash
+py main.py
+```
+
+# To run test
+```bash
+cd ./test
+pytest api_test.py
+```

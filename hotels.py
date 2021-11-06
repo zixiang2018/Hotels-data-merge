@@ -15,15 +15,15 @@ def get_hotel_structure():
         },
         "description": "",
         "amenities": {
-            "general": "",
-            "room": ""
+            "general": [],
+            "room": []
         },
         "images": {
-            "rooms": "",
-            "site": "",
+            "rooms": [],
+            "site": [],
             "amenities": ""
         },
-        "booking_conditions": ""
+        "booking_conditions": []
     }
 
 
