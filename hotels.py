@@ -1,5 +1,6 @@
 import json
 import requests
+import config
 
 def get_hotel_structure():
     return {
@@ -27,7 +28,10 @@ def get_hotel_structure():
     }
 
 
-def get_hotels_from_sup_1(supplier_hotels):
+def get_hotels_from_sup_1(supplier_hotels,api):
+    # use cache if queried before
+    if api in config.cache:
+        return config.cache[api]
     hotel_from_source_1 = []
     for hotel in supplier_hotels:
         hotel_dict = get_hotel_structure()
@@ -42,11 +46,14 @@ def get_hotels_from_sup_1(supplier_hotels):
         hotel_dict['description'] = hotel['Description']
         hotel_dict['amenities']['general'] = hotel['Facilities'] # Take it as facilities == general amenities 
         hotel_from_source_1.append(hotel_dict)
-
+    config.cache[api] = hotel_from_source_1
     return hotel_from_source_1
 
 
-def get_hotels_from_sup_2(supplier_hotels):
+def get_hotels_from_sup_2(supplier_hotels, api):
+    # use cache if queried before
+    if api in config.cache:
+        return config.cache[api]
     hotel_from_source_2 = []
     image_info_list = []
     for hotel in supplier_hotels:
@@ -71,11 +78,14 @@ def get_hotels_from_sup_2(supplier_hotels):
 
         hotel_dict['booking_conditions'] = hotel['booking_conditions']
         hotel_from_source_2.append(hotel_dict)
-
+    config.cache[api] = hotel_from_source_2
     return hotel_from_source_2
 
 
-def get_hotels_from_sup_3(supplier_hotels):
+def get_hotels_from_sup_3(supplier_hotels,api):
+    # use cache if queried before
+    if api in config.cache:
+        return config.cache[api]
     hotel_from_source_3 = []
     image_info_list = []
     for hotel in supplier_hotels:
@@ -99,12 +109,12 @@ def get_hotels_from_sup_3(supplier_hotels):
         image_info_list = []
 
         hotel_from_source_3.append(hotel_dict)
-
+    config.cache[api] = hotel_from_source_3
     return hotel_from_source_3
 
 
 def get_hotels():
-    suppliers = [get_hotels_from_sup_1(json.loads(requests.get("http://www.mocky.io/v2/5ebbea002e000054009f3ffc").text)),
-                   get_hotels_from_sup_2(json.loads(requests.get("http://www.mocky.io/v2/5ebbea102e000029009f3fff").text)),
-                   get_hotels_from_sup_3(json.loads(requests.get("http://www.mocky.io/v2/5ebbea1f2e00002b009f4000").text))]
+    suppliers = [get_hotels_from_sup_1(json.loads(requests.get("http://www.mocky.io/v2/5ebbea002e000054009f3ffc").text) ,"http://www.mocky.io/v2/5ebbea002e000054009f3ffc"),
+                   get_hotels_from_sup_2(json.loads(requests.get("http://www.mocky.io/v2/5ebbea102e000029009f3fff").text), "http://www.mocky.io/v2/5ebbea102e000029009f3fff"),
+                   get_hotels_from_sup_3(json.loads(requests.get("http://www.mocky.io/v2/5ebbea1f2e00002b009f4000").text), "http://www.mocky.io/v2/5ebbea1f2e00002b009f4000")]
     return suppliers
