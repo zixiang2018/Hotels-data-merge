@@ -1,0 +1,4 @@
+pymemcache==3.5.0
+jsonschema==4.2.1
+Flask==2.0.2
+requests==2.25.1

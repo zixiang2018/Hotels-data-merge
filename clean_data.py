@@ -1,7 +1,7 @@
+from pymemcache.client.base import Client
+
 from itertools import groupby
-
 from hotels import get_hotels
-
 
 def consolidate_hotels():
     all_supplier_hotels = get_hotels()
