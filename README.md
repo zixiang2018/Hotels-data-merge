@@ -11,6 +11,11 @@ cd ./test
 pytest api_test.py
 ```
 
+# To run docker
+```bash
+deploy.bat
+```
+
 # Retrieve all hotels
 ```http
 GET /api/retrieve_all_hotels
